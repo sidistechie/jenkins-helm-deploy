@@ -7,7 +7,7 @@ pipeline {
                     sh 'mvn clean install package'
                 }
             }
-            steps('Copy Artifact'){
+            stage('Copy Artifact'){
                 steps {
                     sh 'pwd'
                     sh 'cp -r target/*.jar docker'
