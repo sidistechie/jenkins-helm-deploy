@@ -28,5 +28,18 @@ pipeline {
                     }
                 }
             }
+            stage('Build on Kubernetes'){
+                steps {
+                    withkubeConfig([credentialsId: 'kubeconfig']){
+                        sh 'pwd'
+                        sh 'cp -R helm/*'
+                        sh 'ls -ltrh'
+                        sh 'pwd'
+                        sh '/usr/local/bin/heml upgrade --install petclinic-app petclinic --set images.repositry=sid7100/petclinic --set image.tag=$(BUILD_NUMBER)'
+
+                    }
+                }
+
+            }
         }
 }
