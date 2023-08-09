@@ -18,5 +18,13 @@ pipeline {
                     sh 'mvn test'
                 }
             }
+            stage('Build Docker image'){
+                script {
+                    def customImage = docker.build("sid7100/petclinic:${env.BUILD_NUMBER}","./docker")
+                    docker.withRegistory('https://hub.docker.com', 'dockerhub'){
+                    customImage.push()
+                    }
+                }
+            }
         }
 }
